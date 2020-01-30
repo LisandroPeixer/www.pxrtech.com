@@ -34,3 +34,6 @@ footer ul li{
 	float: right;
 	margin: 0 10px;
 }
+footer div.container{
+	margin-bottom: 250px;
+}
