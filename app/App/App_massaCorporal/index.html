@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Calculadora de Massa Corporal</title>
+		<meta charset="utf-8">
+		<style>
+			body{
+				margin: auto;
+				padding: auto;
+				background: #000;
+			}
+			div{
+				background: url(card.jpg);
+				padding: 10px 20px;
+				width: auto;
+				min-height: 760px;
+				font-size: 3em;
+				text-align: center;
+				margin: 10px;
+				text-shadow: -3px -3px #fff;
+			}
+			h1{
+				margin: 10px;
+				color: white;
+			}
+		</style>	
+	</head>
+
+	<body>
+		<h1>/// PXRTECH \\\</h1>
+		<div>
+			<script type="text/javascript">
+				
+				var nome = prompt('Digite seu nome: ')
+				var altura = prompt('Digite sua altura (ex: 1.80): ')
+				var peso = prompt('Digite seu peso (ex 75): ')
+				var massa = null
+
+				altura = parseFloat(altura)
+				peso - parseFloat(peso)
+
+				massa = altura * altura
+				massa = peso / massa
+
+				document.write('Atleta:<br>', nome, '<br>Massa Corporal:<br>', massa.toFixed(2), '<br>Classificação:<br>')
+
+				if (massa < 16) {document.write('BAIXO PESO "MUITO GRAVE"') }
+				else if (massa >= 16 && massa <= 16.99) {document.write('BAIXO PESO "GRAVE"') }
+				else if (massa >= 17 && massa <= 18.49) {document.write('BAIXO PESO') }
+				else if (massa >= 18.50 && massa <= 24.999) {document.write('PESO NORMAL') }
+				else if (massa >= 25 && massa <= 29.99) {document.write('SOBREPESO')	}
+				else if (massa >= 30 && massa <= 34.99) {document.write('OBESIDADE GRAU I') }
+				else if (massa >= 35 && massa <= 39.99) {document.write('OBESIDADE GRAU II')	}
+				else if	(massa = "NaN") {document.write('Digite novamente') }
+				else {document.write('OBESIDADE GRAU III') }
+
+			</script>
+		</div>		
+	</body>
+</html>
