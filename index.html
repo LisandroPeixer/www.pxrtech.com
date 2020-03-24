@@ -4,21 +4,59 @@ https://infinityfree.net/ -->
 <!doctype html>
 <html lang="pt-br">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <!--link rel="stylesheet" href="css/bootstrap.min.css"-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <!--estilo.css-->
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
     <title>/// PXRTECH \\\</title>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+      <!-- Bootstrap CSS -->
+      <!--link rel="stylesheet" href="css/bootstrap.min.css"-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+      <!--estilo.css-->
+      <link rel="stylesheet" type="text/css" href="estilo.css">
+
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <script>
+      //4função que imprime resposta na pagina
+        function requisitarPagina(url) {
+          document.getElementById('conteudo').innerHTML = ''//limpar        
+            //incluir o gif de loading na página
+            if(!document.getElementById('loading')) {//se ja não houver
+              let imgLoading = document.createElement('img')//crie
+              imgLoading.id = 'loading'//id 
+              imgLoading.src = 'loading.gif'//url 
+              imgLoading.className = 'rounded mx-auto d-block'//css
+              document.getElementById('conteudo').appendChild(imgLoading)//troque conteudo por loading
+            }
+
+      //1Objeto que permite disparar requisições assincronas(requisição não iniciada, state = 0)
+        let ajax = new XMLHttpRequest();    
+          //console.log(ajax.readyState)
+          
+      //2objeto recebe metodo open() com parametro GET, url(conexão estabelecida, state = 1) 
+        ajax.open('GET', url)       
+        
+          //3lógica que monitora o progresso da requisicao
+          ajax.onreadystatechange = () => {
+            if(ajax.readyState == 4 && ajax.status == 200) { //Se state 4 e status 200
+              document.getElementById('conteudo').innerHTML = ajax.responseText //imprima conteudo
+            }
+            if(ajax.readyState == 4 && ajax.status == 404) { //se state 4 e status 404
+              document.getElementById('conteudo').innerHTML = '..tente novamente mais tarde..'
+            }
+          }
+
+      //3objeto recebe metodo send() 
+        //que (envia a requisição, state = 3) 
+        //e (recebe a resposta do servidorstate = 4 )
+        ajax.send()
+        //console.log(ajax)
+      }//requisicao AJAX
+
+    </script><!--FIM de requisicao AJAX-->
 
   </head>
 
@@ -29,7 +67,9 @@ https://infinityfree.net/ -->
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
         <!-- Logo -->
-        <a href="https://github.com/LisandroPeixer/www.pxrtech.com" class="navbar-brand">///PXRTECH\\\</a>
+        <h3 class="mr-auto text-success">
+          ///PXRTECH\\\
+        </h3>
 
         <!-- Menu Hamburguer -->
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navegacao2">
@@ -39,133 +79,136 @@ https://infinityfree.net/ -->
         <div class="collapse navbar-collapse" id="navegacao2"><!-- navegacao -->
 
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Sobre</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Serviços</a></li>
+            <a href="index.html" class="dropdown-item text-success">
+              Home
+            </a>
+            <a href="#" class="dropdown-item text-success" onclick="requisitarPagina('sites.html')">
+              Sites
+            </a>
+            <a href="#" class="dropdown-item text-success" onclick="requisitarPagina('sistemas.html')">
+              Sistemas
+            </a>
+            <a href="#" class="dropdown-item text-success" onclick="requisitarPagina('apps.html')">
+              Aplicativos
+            </a>
+            <a href="#" class="dropdown-item text-success" onclick="requisitarPagina('games.html')">
+              Games
+            </a>
           </ul>
-          
-          <div class="dropdown m-1"><!--dropdown-->
-            <button class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" type="button">
-              CATEGORIAS
-            </button>
-            <div class="dropdown-menu">
-              <a href="sites.html" class="dropdown-item text-success">Sites</a>
-              <a href="#" class="dropdown-item text-success">Sistemas</a>
-              <a href="apps.html" class="dropdown-item text-success">Aplicativos</a>
-              <a href="app/jogo1/index.html" class="dropdown-item text-success">Games</a>
-            </div>
-          </div><!--fim do dropdown-->  
-          
+         
         </div><!-- fim da navegacao -->
 
       </nav>
     </header><!--fim da barra de navegação-->
+
 <!--___________________________________________________________________________________________________-->    
 
-<!--CAROUSEL-->
-    <section style="text-shadow: -3px -3px #000"><!--inicio do carousel-->
-   
-      <div id="carousel-legenda" class="carousel slide" data-ride="carousel"><!--Carousel -->
-        <!-- Indicadores -->
-        <ol class="carousel-indicators">
-          <li class="active" data-target="#carousel-legenda" data-slide-to="0"></li>
-          <li data-target="#carousel-legenda" data-slide-to="1"></li>
-          <li data-target="#carousel-legenda" data-slide-to="2"></li>
-          <li data-target="#carousel-legenda" data-slide-to="3"></li>
-        </ol>
+<!--AJAX-->
+    <section  id="conteudo"><!--inicio de Conteudo-->
+ 
+      <div style="text-shadow: -3px -3px #000"><!--inicio do carousel-->
 
-        <div class="carousel-inner"><!--Inner --> 
+        <div id="carousel-legenda" class="carousel slide" data-ride="carousel"><!--Carousel -->
+          <!-- Indicadores -->
+          <ol class="carousel-indicators">
+            <li class="active" data-target="#carousel-legenda" data-slide-to="0"></li>
+            <li data-target="#carousel-legenda" data-slide-to="1"></li>
+            <li data-target="#carousel-legenda" data-slide-to="2"></li>
+            <li data-target="#carousel-legenda" data-slide-to="3"></li>
+          </ol>
 
-          <div class="carousel-item active"><!--img1-->
-            <img class="img-fluid" src="https://source.unsplash.com/random/1400x803">
-            <div class="carousel-caption">
-              <div >
-                <h1>Sites Incriveis!!!</h1>
+          <div class="carousel-inner"><!--Inner --> 
+
+            <div class="carousel-item active"><!--img1-->
+              <img class="img-fluid" src="https://source.unsplash.com/random/1400x603">
+              <div class="carousel-caption">
+                <div >
+                  <h1>Sites</h1>
+                  <h4>
+                    O melhor conteudo Digital.
+                  </h4>
+                </div>
+              </div>
+            </div><!--img1-->
+
+            <div class="carousel-item"><!--img2-->
+              <img class="img-fluid" src="https://source.unsplash.com/random/1400x604">
+              <div class="carousel-caption">
+                <h1>Sistemas</h1>
                 <h4>
-                  O melhor conteudo Digital.
+                  Atendemos com precisão.
                 </h4>
               </div>
-            </div>
-          </div><!--img1-->
+            </div><!--img2-->
 
-          <div class="carousel-item"><!--img2-->
-            <img class="img-fluid" src="https://source.unsplash.com/random/1400x804">
-            <div class="carousel-caption">
-              <h1>Sistemas Eficazes!!!</h1>
-              <h4>
-                Atendemos com precisão.
-              </h4>
-            </div>
-          </div><!--img2-->
+            <div class="carousel-item"><!--img3-->
+              <img class="img-fluid" src="https://source.unsplash.com/random/1400x601">
+              <div class="carousel-caption">
+                <h1>Aplicativos</h1>
+                <h4>
+                  Modernos e atuais.
+                </h4>
+              </div>
+            </div><!--img3-->
 
-          <div class="carousel-item"><!--img3-->
-            <img class="img-fluid" src="https://source.unsplash.com/random/1400x801">
-            <div class="carousel-caption">
-              <h1>Aplicativos Surpreendentes</h1>
-              <h4>
-                Modernos e atuais.
-              </h4>
-            </div>
-          </div><!--img3-->
+            <div class="carousel-item"><!--img4-->
+              <img class="img-fluid" src="https://source.unsplash.com/random/1400x602">
+              <div class="carousel-caption">
+                <h1>Games</h1>
+                <h4>
+                  Divirta-se com seus amigos. 
+                </h4>
+              </div>
+            </div><!--img4-->
 
-          <div class="carousel-item"><!--img4-->
-            <img class="img-fluid" src="https://source.unsplash.com/random/1400x802">
-            <div class="carousel-caption">
-              <h1>Games!!!</h1>
-              <h4>
-                Divirta-se com seus amigos. 
-              </h4>
-            </div>
-          </div><!--img4-->
+          </div><!--/Inner -->
 
-        </div><!--/Inner -->
+          <!-- Controles -->
+          <a href="#carousel-legenda" class="carousel-control-prev" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a href="#carousel-legenda" class="carousel-control-next" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </a>
 
-        <!-- Controles -->
-        <a href="#carousel-legenda" class="carousel-control-prev" data-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a href="#carousel-legenda" class="carousel-control-next" data-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </a>
+        </div><!--/Carousel -->
 
-      </div><!--/Carousel -->
+      </div><!--final do carousel-->
     
-    </section><!--final do carousel-->
+    </section><!--final de Conteudo-->
 <!--___________________________________________________________________________________________________-->    
 
 <!--RODAPE-->
     <footer><!--inicio do rodape-->
-      <div class="container">
-        <div class="row" >
-     
-          <div class="col-6">
-            <h3>Categorias</h3>
-            <ul class="navbar-nav">
-              <li><a href="sites.html">Sites</a></li>
-              <li><a href="#">Sistemas</a></li>
-              <li><a href="app/app_lista_tarefas/index.php">Aplicativos</a></li>
-              <li><a href="app/jogo1/index.html">Games</a></li>
-            </ul>
-          </div>
 
-          <div class="col-6">
-            <ul>
-              <li>
-                <a href=""><img src="img/facebook.png"></a>
-              </li>
-              <li>
-                <a href=""><img src="img/instagram.png"></a>
-              </li>
-              <li>
-                <a href=""><img src="img/twitter.png"></a>
-              </li>
-            </ul>
-          </div>
+        <ul class="navbar-nav mr-auto" style="width: 200px;">
+          <li><a href="index.html" class="dropdown-item text-success">  
+            Home
+          </a></li>
+          <li><a href="#" class="dropdown-item text-success" onclick="requisitarPagina('sites.html')">
+            Sites
+          </a></li>
+          <li><a href="#" class="dropdown-item text-success" onclick="requisitarPagina('apps.html')">
+            Aplicativos
+          </a></li>
+          <li><a href="#" class="dropdown-item text-success" onclick="requisitarPagina('sistemas.html')">
+            Sistemas
+          </a></li>
+          <li><a href="#" class="dropdown-item text-success" onclick="requisitarPagina('games.html')">
+            Games
+          </a></li>
+        </ul>
 
-        </div>
-
-      </div>
+        <ul class="ml-auto">
+          <li>
+            <a href="https://github.com/LisandroPeixer/www.pxrtech.com" class="text-success"> 
+              <i class="fab display-4 fa-github"></i>
+            </a>
+          </li>
+        </ul>
+          
     </footer><!--fim do rodape-->
+
 <!--___________________________________________________________________________________________________-->    
 
     <!-- Optional JavaScript -->

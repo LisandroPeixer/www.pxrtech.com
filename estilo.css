@@ -1,5 +1,7 @@
 /*BARRA DE NAVEGAÇÃO COM FORMULÁRIO E DROPDOWN*/
-
+html{
+	background: #000;
+}
 
 
 /*CAROUSEL*/
@@ -12,14 +14,11 @@
 
 /*RODAPE*/
 footer{
-	padding: 50px;	
+	padding-bottom: 100%;	
 	background: #000;
 	color:#fff;
 }
-footer h4{
-	color: white;
-	text-transform: uppercase;
-}
+
 footer .navbar-nav a{
 	color: #298A08;
 }
@@ -34,6 +33,6 @@ footer ul li{
 	float: right;
 	margin: 0 10px;
 }
-footer div.container{
-	margin-bottom: 250px;
+footer div{
+	padding: 100%;
 }

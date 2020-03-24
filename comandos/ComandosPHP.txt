@@ -1,0 +1,360 @@
+COMANDOS PHP:(ligar servidor apache / arquivos em C:\xampp\htdocs / abrir como localhost)
+________________________________________________
+////////////////////////////////////////////TAGS
+<?php echo 'Utilizando a tag padrao'; ?>
+<? echo 'utilizando tag curta'?>;<!--para habilitar= C:\xampp\php\php.ini\short_open_tag=On-->
+
+<?= 'utilizando tag de impressão'?> (imprime no browser)
+__________________________________
+/////////////////////////IMPRESSAO
+echo 'comando echo<br/>';
+print 'comando print<br/>';
+echo print 'comando echo print<hr/>'
+
+<?= 'utilizando tag de impressão'?> (imprime no browser)
+_____________________________________
+//////////////////////////COMENTARIOS
+// comentario de uma linha
+# outro comentario de uma linha
+
+/* comentario de varias linhas
+todas os comentarios são desconsiderados 
+na interpretaçao do codigo */
+_____________________________________________
+////////////////////////////////////VARIAVEIS
+$nome = 'Estanislau House'; //string
+$idade = 52; //int
+$peso = 118.54;//float
+$sedentario = true //boolean (true = 1/ false = vazio)
+
+'A concatenacao é feita por' . $nome ." entre aspas ". $idade
+_______________________________________________
+/////////////////////////////////////CONSTANTES
+(USADO PARA: bd,login, api)
+define('BD_URL', 'endereco_bd_dev');		//podem ser recuperadas em qualquer lugar do script
+echo BD_URL . '<br />';				//nao precisa de $ pra recuperar
+_______________________
+////////////////CASTING
+gettype($valor);	//Verifica qual e o tipo da variavel
+(float) $valor;		//converte para fracao
+(string) $valor;	//para string
+(int) $valor;		//para inteiro
+(boolean) $valor;	//verdadeiro=1 / variavel vazia = falso
+_____________________________
+///////////////////ARITMETICA:
++	SOMA
+-	DIMINUICAO
+*	MULTIPLICACAO
+/	DIVISAO
+%	RESTO DA DIVISAO(modulo)
+$var +1 atribuicao
++=	atribuicao simplificada (serve para todos os operadores)
+++$var	pre-incremento(soma agora)
+$var++	pos-incremento(soma na proxima)
+--$var	pre-decremento
+$var--	pos-decremento
+__________________________
+///////////////////ARRAYS:
+declarando:
+$lista_frutas = array('banana', 'mamao', 'maca', 'laranja');	//classico
+$lista_frutas[] = 'abacate';					//acrescentar fora do array (posso declarar indice)
+$lista_carros = ['vectra', 'golf', 'stilo', '305'];		//declara com colchetes
+
+imprimindo:
+	echo "<pre>";						//mostra array em lista
+		var_dump($lista_frutas);			//mostra tipo da variavel e conta caracteres
+	echo "</pre>";
+
+	echo "<pre>";
+		print_r($lista_carros);				//[indice]=> valor (mais usado)
+	echo "</pre>";
+
+associando indices:
+$lista_cidades = ['a' => 'Rio de janeiro', '@' => 'Brasilia', '8' => 'Floripa', 'dse' => 'Nova Yorque'];
+
+recuperando pelo indice:
+echo $lista_cidades['dse'];
+________________
+
+ARRAY DE ARRAYS:
+$lista_compras = []; 
+$lista_compras['verduras'] = ['alface', 'tomate', 'cebola', 'pimentao']; 
+$lista_compras['proteina'] = ['carne', 'frango', 'peixe', 'ovo']; 
+$lista_compras['limpeza'] = ['amaciante', 'omo', 'cloro', 'detergente']; 
+
+	echo "<pre>";
+		print_r($lista_compras);			
+	echo "</pre>";
+
+echo $lista_compras['limpeza'][0]. '<br/>';		//recuperando variavel pela coordenada
+echo $lista_compras['proteina'][1]. '<br/>';		//recuperando variavel pela coordenada
+
+//mais no https://www.php.net/manual/en/book.array.php
+
+_____________________________________________________
+/////////////////////////////////////////CONDICIONAIS
+OPERADORES DE COMPARAÇÃO:	
+	== igual
+	=== identico
+	!= ou <> diferente
+	!== não identico
+	< menor
+	> maior
+	<= menor ou igual
+	>= maior ou igual
+___________________
+
+OPERADORES LOGICOS:
+	&& ou AND: todas as condições verdadeiras
+	|| ou OR: se um for verdadeiro
+	XOR: se uma ou outra for verdadeira apenas
+	! negacao inverte o resultado
+_______
+
+IF-ELSE
+if(true){
+	echo 'verdadeiro';
+} else {
+	echo "falso";
+}
+_________
+
+TERNARIO:
+$usuario_cartao ? "SIM" : "NÃO";
+_______
+
+SWITCH:
+$parametro = 8;
+switch($parametro){
+	case 1 == $parametro:
+		echo "Entrou no case 1";
+		break;
+
+	case '2' == $parametro:
+		echo "Entrou no case 2";
+		break;
+
+	case 3 == $parametro:
+		echo "Entrou no case 3";
+		break;
+
+	default:
+		echo "Entrou no default";
+		break;
+}
+_______________________________
+//////////////////////////LOOPS
+FOR:
+for($f = 1;$f < 10; $f++){			//Use condicionais if com (break; / continue;)
+	echo$f. 'for percorendo <br/>';
+}
+______
+
+WHILE:
+$num = 1;	
+while ($num <= 10) {
+	echo $num.'loop com incremento simples<br/>';
+	$num++;
+}
+_________
+
+DO WHILE:
+$x = 10;
+do {
+	$x--;
+	echo $x.'entrou no do while<br/>';
+} while($x > 0);
+________
+
+FOREACH:
+$itens = array('mesa', 'geladeira', 'fogao', 'sofa', 'cama', 'guarda roupa');
+foreach($itens as $item){
+	echo $item;
+	if($item == 'fogao'){
+		echo ' => ganhou jogo de panelas';
+	}
+}
+__________________________________________
+///////////////////////////////////FUNÇÕES
+VOID (set)
+function darBoasVindas(){
+	echo "Boas Vindas!!!<br/>";
+}
+darBoasVindas();
+___________________________
+RETURN (get)
+function calcularAreaTerreno($largura, $comprimento){
+	$area = $largura * $comprimento;
+	return $area;
+}
+echo calcularAreaTerreno(15, 20);
+_______________________________________________
+////////////////////////////////FUNÇÕES NATIVAS
+STRINGS:
+$texto = 'Curso Completo de PHP';
+
+echo $texto . '<br/>';
+echo strtolower($texto) . '<br/>';			//todas minusculas		
+echo strtoupper($texto) . '<br/>';			//todas mauiusculas 			
+echo ucfirst($texto) . '<br/>';				//so a primeira maiuscula 			
+echo strlen($texto) . '<br/>';				//conta caracteres 			
+echo str_replace('PHP', 'JavaScript', $texto) . '<br/>';//troca caracteres			
+echo str_replace('o', '@', $texto) . '<br/>'; 			
+echo substr($texto, 6, 9) . '<br/>';			//extrai caracteres 
+explode(' | ', $chamado);				//separa array em strings
+implode('#', $_POST);					//agrupa strings em array
+
+//mais em https://www.php.net/manual/en/book.strings.php
+_________________________
+
+MATEMATICAS:
+$num = 7.5;
+
+echo ceil($num) . '<br/>';		//arredonda pra cima
+echo floor($num) . '<br/>';		//arredonda pra baixo
+echo round($num) . '<br/>';		//arredonda pela fração
+echo rand(1, 100) . '<br/>';		//gera aleatorio
+echo getrandmax() . '<br/>';		//mostra valor aleatorio maximo
+echo sqrt(90) . '<br/>';		//raiz quadrada
+echo abs(90 - 150) . '<br/>';		//positivo
+//mais em https://www.php.net/manual/en/book.math.php
+______________
+
+DATAS E HORAS:
+echo date('d D/ M m/ Y H:i') . '<br/>';				//retorna data e hora do sistema
+echo date_default_timezone_get() . '<br/>';			//retorna timezone do sistema
+
+//para configurar pode ser no php.ini ou com a funcao abaixo
+echo date_default_timezone_set('America/Sao_Paulo') . '<br/>';	//configura timezone do sistema
+echo date('d D/ M m/ Y H:i') . '<br/>';				//retorna data e hora do sistema
+______________
+
+CONTANDO DIAS: 
+use timestamp 1970-01-01
+
+$data_inicial = '2018-04-24';
+$data_final = '2018-05-15';
+
+$time_inicial = strtotime($data_inicial);	//conta em milissegundos desde 1970-01-01
+$time_final = strtotime($data_final);
+echo $data_inicial . ' - ' . $time_inicial . '<br/>';
+echo $data_final . ' - ' . $time_final . '<br/>';
+echo ((($time_final - $time_inicial) / 60) / 60) / 24  . '<br/>';//converte milissegundos para dias
+//mais em https://www.php.net/manual/en/function.date.php
+_______
+
+OUTROS:
+header('Location: index.php');					//desvia para pagina indicada		
+isset($_SESSION['autenticado']);				//verifica se tem valor no indice indicado no array
+unset($_POST['autenticado']);					//remove indices de arrays
+
+$arquivo = fopen('../../app_help_desk/arquivo.hd', 'a');	//abrindo o arquivo 
+fwrite($arquivo, $texto);					//escrevendo o texto
+fclose($arquivo);						//fechando o arquivo
+feof($arquivo);							//executar ate o fim do arquivo
+fgets($arquivo);						//captura tudo ate o final da linha
+file_exists(arquivo.txt);					//verifica se existe um arquivo (true ou false)
+empty($this->nome)						//verifica se variavel esta vazia
+die();								//mata aplicação
+___________________________________________________________________________________________________
+
+///////////////////////////////REQUISIÇÕES http
+NO HTML:
+2 - <form action="https://www.servidor.com/arquivo.php" method="post">		//ou get
+0 - <input name="email">
+0 - <input name="senha">			
+1 - <button type="submit"> 
+
+o endereço fica assim: https://www.servidor.com/arquivo.php?email=x@y.com%20%senha=1234
+____________________
+
+NO arquivo.php:
+<?php $_GET 		//recebe form como array $_GET['email'=>'x@y.com','senha'=>'1234']
+print_r($_GET);
+echo $_GET['email'];
+echo $_GET['senha'];
+?>
+	
+<?php $_POST 		//ou este, mais seguro
+print_r($_POST);
+echo $_POST['email'];
+echo $_POST['senha']; 
+?>
+
+////////////////RESTRIÇÃO DE CONTEUDO
+session_start();				//inicia controle por sessão
+$_SESSION['autenticado'] = 'SIM';		//encapsulador da chave de acesso
+session_destroy();				//finaliza sessão removendo chave de acesso 
+header('Location: index.php');			//redireciona para index (forçar reload)
+
+<?  require_once "validador_acesso.php";  ?>	//usar em todas as paginas com restrição
+
+////////////////////////////IMPORT/EXPORT
+include "validador_acesso.php";			//seu erro gera warning mas imprime conteudo)
+include_once "validador_acesso.php";		//so imprime uma vez ignorando as demais requisições 
+require "validador_acesso.php";			//seu erro gera fatal error e finaliza processso
+require_once "validador_acesso.php";		//so imprime uma vez ignorando as demais requisições 
+_____________________________________________________________________________________________
+
+/////////////////ORIENTAÇÃO A OBJETOS 			//abstração = digitalizar coisas)
+class Funcionario extends Pessoa{ 			//herança (classe filho herda atributos da classe pai)
+
+//CARACTERISTICAS (atributos)				//encapsulamento(
+	public $nome = null;		  			disponivel para a aplicacao
+	protected $telefone = null; 				disponivel via get/set public 
+	private $numFilhos = null;				disponivel via get/set public apenas no objeto pai	)
+									
+//COMPORTAMENTOS 	
+	//construct/destruct
+	function __construct($nome, $telefone, $numFilhos){
+		$this->nome = $nome;
+		$this->telefone = $telefone;
+		$this->numFilhos = $numFilhos;
+	}
+	function __destruct(){
+		echo 'objeto destruido <br/>';
+	}
+____________	
+	//(getters e setters overload/magic)
+	function __set($atributo, $valor){
+		$this->$atributo = $valor;
+	}
+	function __get($atributo){
+		return $this->$atributo;
+	}
+____________
+	//metodo que agrupa retorno de atributos
+	function resumirCadFunc(){			//polimorfismo (mesmo metodo mas com comportamentos diferentes)
+		return " resumo de cadastro nome: ".$this->__get('nome').
+		       " telefone: ".$this->__get('telefone').
+		       " Filhos: ".$this->__get('numFilhos')."<br/><hr/>";
+	}
+____________
+	public function alterarAtributos(){		//interface public que disponibiliza o acesso a private e protected
+		$this->telefone();
+		$this->numFilhosr();
+	}
+}
+
+//OBJETOS
+$func1 = new Funcionario();
+$func1->__set('nome', 'joao');
+$func1->__set('telefone', '48 32652167');
+$func1->__set('numFilhos', '1');
+echo $func1->__get('nome').' tem o telefone nº '.$func1->__get('telefone').' e tem '.$func1->__get('numFilhos').' filho(s)';
+
+echo $func1->resumirCadFunc();//metodo que agrupa retorno de atributos
+
+$func2 = new Funcionario('maria', '23652159', '2'); //construct
+unset($func2); //destruct
+__________________________________
+
+print_r(get_class_methods($correntistaBB));		//retorna metodos do objeto
+
+
+
+
+
+class Carro{
+
+}

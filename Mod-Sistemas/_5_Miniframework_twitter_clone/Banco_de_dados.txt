@@ -1,0 +1,153 @@
+create database twitter_clone;
+
+create table usuarios(
+    id		int 		not null		primary key	AUTO_INCREMENT,
+    nome	varchar(100)	not null,
+    email	varchar(150)	not null,
+    senha	varchar(32)	not null
+);
+
+create table tweets(
+    id		int 		not null		primary key	AUTO_INCREMENT,
+    id_usuario	int 		not null,
+    tweet	varchar(140)	not null,
+    date	datetime	default			current_timestamp
+);
+
+create table usuarios_seguidores(
+    id 				int 	not null 	primary key 	AUTO_INCREMENT,
+    id_usuario 			int 	not null,
+    id_usuario_seguindo 	int 	not null
+);
+_____________________________________________________________
+/////////////////////////////////////////////////Criptografia
+-----------modifica senha de usuarios
+SELECT md5(senha) as senha FROM `usuarios` WHERE id in(1, 2);
+update usuarios set senha = md5(senha) where id in(1, 2);
+
+-----------descriptografar senha
+https://md5.gromweb.com/ 
+
+___________________________________________________________________
+/////////////////////////////////////////////////////ENVIANDO DADOS
+_________
+1 - criar form em index.phtml e enviar para Route.php
+
+	<form method="post" action="/cadastrar">
+		<input type="text" name="nome">
+		<input type="text" name="email">
+		<input type="text" name="senha">
+		<button type="submit">enviar<button>
+	</form>
+_________
+2 - criar rota em Route.php e enviar para indexController.php
+
+	$routes['cadastrar'] = array(
+		'route' => '/cadastrar',
+		'controller' => 'indexController',
+		'action' => 'cadastrar'
+	);
+_________
+3 - criar action em indexController.php e enviar para usuario.php
+	
+	public function cadastrar() {
+		/*echo "<pre>";
+		print_r($_POST);
+		echo "</pre>";.*///teste
+	
+	//enviar para conexao com banco de dados
+	$usuario = Container::getModel('usuario');	//criando objeto
+	$usuario->__set('nome', $_POST['nome']);
+	$usuario->__set('email', $_POST['email']);
+	$usuario->__set('senha', $_POST['senha']);	//enviando valores para atributos
+	$usuario->salvar();				//metodo que salva no banco de dados
+	header('location: /cadastro)
+	}
+_________
+4 - criar class Usuario em usuario.php e enviar para o banco de dados
+
+	class Usuario extends Model {
+
+		prirvate $nome;
+		private $email;
+		private $senha;			
+
+		public function __get($atributo){
+			return $this->$atributo;
+		}
+		public function __set($atributo, $valor){
+			$this->$atributo = $valor;
+		}
+		
+		//metodo que salva no banco de dados
+		public function salvar(){
+		$query = "insert into tb_usuario( nome, email, senha )values( :nome, :email, :senha)";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':nome', $this->__get('nome'));
+		$stmt->bindValue(':email', $this->__get('email'));
+		$stmt->bindValue(':senha', $this->__get('senha'));
+		$stmt->execute();
+
+		return $this;
+	}
+__________________________________________________________________
+//////////////////////////////////////////////////RETORNANDO DADOS
+_________
+5 - Criar formulario de consulta em pesquisa.phtml e enviar para route.php
+
+	<form method="get" action="/pesquisar">
+		<input type="text" name="pesquisar">
+		<button type="submit">Procurar</button>
+	</form>
+_________
+6 - criar rota em Route.php e enviar para indexController.php
+
+	$routes['pesquisar'] = array(
+		'route' => '/pesquisar',
+		'controller' => 'indexController',
+		'action' => 'pesquisar'
+	);
+_________
+7 - criar funcao pesquisar em indexController.php e enviar para usuario.php
+
+	public function pesquisar(){		
+		//echo 'Estamos Aqui!';	print_r($_GET); teste
+		
+		$pesquisar = isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '';		
+		
+		//echo 'pesquisar: '.$pesquisar; teste
+		
+		$usuarios = array();
+		
+		if($pesquisar != ''){
+			$usuario = Container::getModel('Usuario');
+			$usuario->__set('nome', $pesquisarPor);
+			$usuarios = $usuario->getAll();		// 8-getAll da classe usuario de usuario.php	
+			
+			/*echo "<pre>";
+			print_r($usuarios);
+			echo "</pre>";*///teste 
+		}
+		$this->view->usuarios = $usuarios;
+		$this->render('pesquisar');
+	}
+_________
+8 - criar metodo getAll na 'classe usuario' em usuario.php e retornar array para indexController.php
+
+	//procura por usuarios usando caracter coringa '%' selecionando parte de nome '%like%')
+	public function getAll(){
+		$query = "select id, nome, email from usuarios where nome like :nome";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':nome', '%'.$this->__get('nome').'%');
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+_________
+9 - criar foreach em em pesquisa.phtml para percorrer e imprimir array() $usuarios de indexController.php
+
+<?php foreach($this->view->usuarios as $indice_arr => $usuario) { ?>
+	<?= $usuario['nome'] ?>
+	<?= $usuario['email'] ?>
+<?php } ?>
+
